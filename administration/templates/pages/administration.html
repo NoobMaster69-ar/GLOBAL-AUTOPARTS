@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+{% block title %}ADMINISTRACION - GLOBAL AUTOPARTS{% endblock %}
+
+{% block JS %}<script src="{% static 'js/administration.js' %}"></script>{% endblock %}
+
+{% block content %}
+    <main class="d-flex flex-column vh-100">
+        {% include "pages/navbar.html" %}
+        <section class="container flex-grow-1">
+            <div class="row my-3 gap-3 gap-md-0">
+                <div class="col-12 col-md-6">
+                    <div class="card mx-auto" style="max-width: 460px;">
+                        <div class="card-header text-center fw-bold fs-5">
+                            Carga/Eliminacion de datos
+                        </div>
+                        <div class="card-body">
+                            <form class="mb-2" enctype="multipart/form-data" onsubmit="loadData(event)">
+                                {% csrf_token %}
+                                <p class="mb-1">Suba el archivo de datos a cargar:</p>
+                                <div class="input-group mb-3">
+                                    <input type="file" class="form-control" id="inputFile">
+                                </div>
+                                <p class="mb-1">Seleccione el proveedor:</p>
+                                <select class="form-select mb-3" id="supplierSelect">
+                                    {% for supplier in suppliers %}
+                                        <option value="{{ supplier.id }}">{{ supplier.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button class="btn btn-success d-block w-75 mx-auto" type="submit">Aceptar</button>
+                            </form>
+                            <button class="btn btn-danger d-block w-75 mx-auto" type="button" onclick="eraseData()">Eliminar datos</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="card mx-auto" style="max-width: 460px;">
+                        <div class="card-header text-center fw-bold fs-5">
+                            Estadisticas
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center">
+                                <span class="fw-bold text-center mb-2 text-decoration-underline fs-5">Total de productos</span>
+                                <span class="text-center fs-5 text-white bg-success py-1 px-3 rounded-pill">{{ items }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}

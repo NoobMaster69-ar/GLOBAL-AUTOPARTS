@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+{% block title %}INICIO - GLOBAL AUTOPARTS{% endblock %}
+
+{% block JS %}
+    <script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
+    <script src="{% static 'js/panel.js' %}"></script>
+{% endblock %}
+
+{% block CSS %}<link rel="stylesheet" href="https://unpkg.com/@trevoreyre/autocomplete-js/dist/style.css" />{% endblock %}
+
+{% block content %}
+    <main class="d-flex flex-column vh-100">
+        {% include "pages/navbar.html" %}
+        <section class="container flex-grow-1 my-3 d-flex flex-column flex-md-row justify-content-start gap-3 gap-md-0">
+            <div class="w-100" style="padding: 0 12px;">
+                <div class="card mx-auto" style="max-width: 460px;">
+                    <h5 class="card-header text-center fw-bold fs-5">Búsqueda de productos</h5>
+                    <div class="card-body">
+                        <div id="autocomplete" class="autocomplete">
+                            <input type="text" class="form-control" id="autoComplete" placeholder="Buscar">
+                            <ul class="autocomplete-result-list"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-100 d-none" style="padding: 0 12px;" id="productDetails">
+                <div class="card mx-auto" style="max-width: 460px;">
+                    {% csrf_token %}
+                    <h5 class="card-header text-center fw-bold fs-5">Detalles del producto</h5>
+                    <div class="card-body">
+                        <div class="row gap-3 gap-md-0 mb-3">
+                            <div class="col-12 col-lg-6 d-flex flex-column align-items-center justify-content-center">
+                                <p class="text-break fw-bold fs-5 text-center mb-3" id="productName"></p>
+                                <p class="m-0" id="productQuality"></p>
+                            </div>
+                                <div class="col-12 col-lg-6 d-flex justify-content-center">
+                                    <img class="img-fluid" width="220" id="productImage">
+                                </div>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <p class="fs-5 m-0">Precio de venta: $<span class="fw-bold text-success" id="productPrice" aria-hidden="true"></i>></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body text-center">
+                            <img id="modalImage" class="img-fluid" alt="Product Image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}
